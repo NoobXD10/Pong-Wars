@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Romantic Text-based Ping Pong Game</title>
+<style>
+    body {
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    #game {
+        width: 600px; /* Increased width */
+        height: 400px; /* Increased height */
+        background-color: #222;
+        position: relative;
+    }
+    #ball {
+        width: 20px;
+        height: 20px;
+        background-color: #f0f0f0;
+        border-radius: 50%;
+        position: absolute;
+    }
+    #paddle-left, #paddle-right {
+        width: 10px;
+        height: 100px; /* Increased height of paddles */
+        background-color: #f0f0f0;
+        position: absolute;
+    }
+    #paddle-left {
+        left: 10px;
+    }
+    #paddle-right {
+        right: 10px;
+    }
+    #message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        color: #f0f0f0;
+        display: none; /* Hidden by default */
+    }
+</style>
+</head>
+<body>
+<div id="game">
+    <div id="ball"></div>
+    <div id="paddle-left"></div>
+    <div id="paddle-right"></div>
+    <div id="message"></div>
+</div>
+
+<script>
+    let ball = document.getElementById('ball');
+    let paddleLeft = document.getElementById('paddle-left');
+    let paddleRight = document.getElementById('paddle-right');
+    let messageDisplay = document.getElementById('message');
+
+    let ballX = 300, ballY = 200; // Initial ball position in the center
+    let ballSpeedX = 2, ballSpeedY = 2; // Ball speed
+    let paddleLeftY = 150, paddleRightY = 150; // Initial paddle positions
+    let paddleSpeed = 5; // Paddle speed
+
+    // Romantic messages array
+    let messages = [
+        "You are my sunshine.",
+        "I love you more than words can say.",
+        "You make my heart skip a beat.",
+        "You're the love of my life.",
+        "Every moment with you is precious.",
+        "I cherish our time together.",
+        "You're my everything.",
+        "I'm so lucky to have you.",
+        "Forever yours.",
+        "I fall for you more every day.",
+        "You're my dream come true.",
+        "My heart races when I see you.",
+        "You complete me.",
+        "You're the reason for my smile.",
+        "You're the one I've been waiting for.",
+        "You light up my life.",
+        "You're my happily ever after.",
+        "Being with you feels like home.",
+        "You're the best thing that's ever happened to me.",
+        "With you, I am whole.",
+        "I love you <3",
+        "Dino Grr 🦖",
+        "🤭",
+        "❤️"
+    ];
+
+    function updateGame() {
+        // Update ball position
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+
+        // Ball collision with top and bottom walls
+        if (ballY <= 10 || ballY >= 390) {
+            ballSpeedY *= -1;
+            displayMessage(messages[Math.floor(Math.random() * messages.length)]);
+        }
+
+        // Ball collision with paddles
+        if (ballX <= 30 && ballY >= paddleLeftY && ballY <= paddleLeftY + 100) {
+            ballSpeedX *= -1;
+            displayMessage(messages[Math.floor(Math.random() * messages.length)]);
+        }
+        if (ballX >= 570 && ballY >= paddleRightY && ballY <= paddleRightY + 100) {
+            ballSpeedX *= -1;
+            displayMessage(messages[Math.floor(Math.random() * messages.length)]);
+        }
+
+        // Ball out of bounds (left or right)
+        if (ballX <= 0 || ballX >= 600) {
+            ballX = 300;
+            ballY = 200;
+            ballSpeedX *= -1;
+            displayMessage(messages[Math.floor(Math.random() * messages.length)]);
+        }
+
+        // Update ball position on the screen
+        ball.style.left = ballX + 'px';
+        ball.style.top = ballY + 'px';
+
+        // Update paddles position based on mouse movement
+        document.addEventListener('mousemove', function(e) {
+            paddleLeftY = e.clientY - 50;
+            paddleLeft.style.top = paddleLeftY + 'px';
+            paddleRightY = e.clientY - 50;
+            paddleRight.style.top = paddleRightY + 'px';
+        });
+    }
+
+    // Display message function
+    function displayMessage(msg) {
+        messageDisplay.textContent = msg;
+        messageDisplay.style.display = 'block';
+        setTimeout(function() {
+            messageDisplay.style.display = 'none';
+        }, 8000); // Clear message after 8 seconds
+    }
+
+    // Update game every 10 milliseconds
+    setInterval(updateGame, 10);
+</script>
+</body>
+</html>
