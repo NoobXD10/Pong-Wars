@@ -58,11 +58,18 @@
     <div id="message"></div>
 </div>
 
+<!-- Background music -->
+<audio id="background-music" loop autoplay>
+    <source src="audio/Stray_Kids_-_Lose_My_Breath_feat_Charlie_Puth__@BaseNaija.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+
 <script>
     let ball = document.getElementById('ball');
     let paddleLeft = document.getElementById('paddle-left');
     let paddleRight = document.getElementById('paddle-right');
     let messageDisplay = document.getElementById('message');
+    let backgroundMusic = document.getElementById('background-music');
 
     let ballX = 300, ballY = 200; // Initial ball position in the center
     let ballSpeedX = 2, ballSpeedY = 2; // Ball speed
